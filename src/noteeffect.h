@@ -23,7 +23,7 @@ public:
 		ofDrawCircle(pos.x * ofGetWidth(), pos.y * ofGetHeight(), base + base*level*(EFFECT_SIZE-1));
 	}
 
-	static bool shouldRemove(std::shared_ptr<NoteEffect> ne) {
+	static bool shouldRemove(const std::shared_ptr<NoteEffect> ne) {
 		return ofGetElapsedTimeMillis() - ne->stime > EFFECT_TTL;
 	}
 };
