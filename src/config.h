@@ -8,7 +8,7 @@
 #define VOLUME		0.05L
 #define SAMPLE_RATE	44100
 #define MIN_FREQ	60.0L
-#define MAX_FREQ	4000.0L
+#define MAX_FREQ	3000.0L
 
 
 #endif
