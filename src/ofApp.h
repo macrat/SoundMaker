@@ -5,10 +5,13 @@
 
 #include <ofMain.h>
 
+#include "noteeffect.h"
+
 
 class ofApp : public ofBaseApp {
 private:
 	std::vector< ofPoint > notes;
+	std::vector< std::shared_ptr<NoteEffect> > effects;
 	ofSoundStream sound;
 	double metoro, measure;
 	int phase;

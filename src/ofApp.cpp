@@ -1,11 +1,5 @@
 #include "ofApp.h"
-
-
-#define CIRCLE_SIZE	128.0L
-#define VOLUME		0.05L
-#define SAMPLE_RATE	44100
-#define MIN_FREQ	60.0L
-#define MAX_FREQ	4000.0L
+#include "config.h"
 
 
 void ofApp::setup() {
@@ -32,22 +26,35 @@ void ofApp::setup() {
 
 void ofApp::update() {
 	metoro = ofGetElapsedTimeMillis()%((int)(measure*1000))/measure/1000.0;
+
+	for(auto note: notes){
+		if(abs(note.x - metoro) < 1.0/CIRCLE_SIZE){
+			effects.push_back(std::shared_ptr<NoteEffect>(new NoteEffect(note)));
+		}
+	}
+
+	ofRemove(effects, NoteEffect::shouldRemove);
 }
 
 
 void ofApp::draw() {
 	ofBackgroundGradient(ofColor::gray, ofColor::black);
 
-	ofEnableBlendMode(OF_BLENDMODE_ADD);
-	ofSetColor(255, 255, 255, 64);
-	for(const ofPoint p: notes) {
-		ofDrawCircle(
-			p.x * ofGetWidth(),
-			p.y * ofGetHeight(),
-			min(ofGetWidth(), ofGetHeight())/CIRCLE_SIZE
-		);
+	{
+		ofEnableBlendMode(OF_BLENDMODE_ADD);
+		ofSetColor(255, 255, 255, 64);
+		for(const ofPoint p: notes) {
+			ofDrawCircle(
+				p.x * ofGetWidth(),
+				p.y * ofGetHeight(),
+				min(ofGetWidth(), ofGetHeight())/CIRCLE_SIZE
+			);
+		}
+		for(const auto e: effects){
+			e->draw();
+		}
+		ofDisableBlendMode();
 	}
-	ofDisableBlendMode();
 
 	ofSetColor(255, 255, 255, 128);
 	ofDrawLine(metoro * ofGetWidth(), 0, metoro * ofGetWidth(), ofGetHeight());
