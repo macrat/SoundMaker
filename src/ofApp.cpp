@@ -108,7 +108,7 @@ void ofApp::audioOut(ofSoundBuffer& buffer) {
 
 		for(const auto note: notes){
 			if(abs(note.x - metoro) < 1.0/CIRCLE_SIZE){
-				buffer[i] += sin(phase * ((1-note.y)*MAX_FREQ+MIN_FREQ)*2*PI / SAMPLE_RATE) * VOLUME;
+				buffer[i] += sin(phase * ((1-note.y)*(MAX_FREQ-MIN_FREQ)+MIN_FREQ)*2*PI / SAMPLE_RATE) * VOLUME;
 			}
 		}
 	}
