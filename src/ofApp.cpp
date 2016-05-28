@@ -65,6 +65,9 @@ void ofApp::draw() {
 
 void ofApp::keyReleased(const int key) {
 	if(key == ' '){
+		for(const auto note: notes){
+			effects.push_back(std::shared_ptr<NoteEffect>(new NoteEffect(note)));
+		}
 		notes.clear();
 	}else if(key == OF_KEY_DOWN){
 		measure = max(measure - 0.1, 1.0);
@@ -80,7 +83,14 @@ void ofApp::mouseDragged(const int x, const int y, const int button) {
 	if(button == 0){
 		notes.push_back(mouse);
 	}else if(button == 2){
-		ofRemove(notes, [&mouse](const ofPoint x){ return mouse.distance(x) < 2.0/CIRCLE_SIZE; });
+		for(auto itr=notes.begin(); itr!=notes.end();){
+			if(itr->distance(mouse) < 2.0/CIRCLE_SIZE){
+				effects.push_back(std::shared_ptr<NoteEffect>(new NoteEffect(*itr)));
+				itr = notes.erase(itr);
+			}else{
+				++itr;
+			}
+		}
 	}
 }
 
