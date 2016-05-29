@@ -3,6 +3,8 @@
 
 
 void ofApp::setup() {
+	ofSetFrameRate(120);
+
 	ofSoundStreamSettings settings;
 
 	measure = 2.0;
